@@ -7,13 +7,13 @@ import { formatMoney } from "@/utils/moneyUtils";
 import { formatDate } from "@/utils/dateUtils";
 
 const DebtWidget: React.FC = () => {
-    const { currentDebtData, loading, error } = useDebtData();
+    const { currentDebtData, loading } = useDebtData();
 
     return (
         <WidgetCard
-            title="Total Debt"
+            title="Total Public Debt"
             source="U.S. Department of the Treasury"
-            sourceURL="https://api.fiscaldata.treasury.gov/services/api/fiscal_service/v2/accounting/od/debt_to_penny"
+            sourceURL="https://fiscaldata.treasury.gov/datasets/debt-to-the-penny/debt-to-the-penny"
         >
             <div className="flex items-baseline justify-between">
                 {loading ? (
