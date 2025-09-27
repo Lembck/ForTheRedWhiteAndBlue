@@ -1,22 +1,19 @@
 import React from "react";
-import { Skeleton } from "@/components/ui/skeleton";
 import { formatGDPValue, getQuarter } from "@/utils/gdpUtils";
 import { GDPChangeData } from "@/types/gdp";
 
 interface GDPChangeIndicatorProps {
     change: GDPChangeData | null;
     label: string;
-    loading: boolean;
     includeYearInQuarter?: boolean;
 }
 
 export const GDPChangeIndicator: React.FC<GDPChangeIndicatorProps> = ({
     change,
     label,
-    loading,
     includeYearInQuarter = false,
 }) => {
-    if (loading || !change) return null;
+    if (!change) return null;
 
     return (
         <div
@@ -33,16 +30,12 @@ export const GDPChangeIndicator: React.FC<GDPChangeIndicatorProps> = ({
                 {change.percent.toFixed(1)}%)
             </span>
             <span className="flex items-center gap-2 text-sm text-zinc-500">
-                {loading ? (
-                    <Skeleton className="h-4 w-20 bg-zinc-700" />
-                ) : (
-                    <span className="text-xs flex items-center h-4">
-                        {`${label} ${getQuarter(
-                            change?.dateString,
-                            includeYearInQuarter
-                        )}`}
-                    </span>
-                )}
+                <span className="text-xs flex items-center h-4">
+                    {`${label} ${getQuarter(
+                        change?.dateString,
+                        includeYearInQuarter
+                    )}`}
+                </span>
             </span>
         </div>
     );

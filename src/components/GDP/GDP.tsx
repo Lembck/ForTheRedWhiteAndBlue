@@ -1,7 +1,13 @@
 "use client";
 
 import React from "react";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import {
+    Card,
+    CardContent,
+    CardDescription,
+    CardHeader,
+    CardTitle,
+} from "@/components/ui/card";
 import { useGDPData } from "@/hooks/useGDPData";
 import { calculateChange } from "@/utils/gdpUtils";
 import { GDPErrorCard } from "./GDPErrorCard";
@@ -27,7 +33,7 @@ const GDP: React.FC = () => {
     }
 
     return (
-        <Card className="w-full max-w-sm bg-zinc-900 border-zinc-800 shadow-2xl">
+        <Card className="w-sm bg-zinc-900 border-zinc-800 shadow-2xl">
             <CardHeader className="flex flex-row items-center justify-between space-y-0">
                 <CardTitle className="text-sm font-bold text-zinc-300">
                     Gross Domestic Product (GDP)
@@ -44,6 +50,9 @@ const GDP: React.FC = () => {
                         ]}
                         loading={loading}
                     />
+                    <CardDescription className="text-xs text-zinc-500">
+                        Source: Federal Reserve Economic Data (FRED)
+                    </CardDescription>
                 </div>
             </CardContent>
         </Card>
