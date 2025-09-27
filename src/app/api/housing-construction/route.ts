@@ -14,8 +14,10 @@ export async function GET() {
         const FRED_API_KEY = process.env.FRED_API_KEY;
 
         if (!FRED_API_KEY) {
-            console.log("FRED_API_KEY not found, skipping FRED data fetch");
-            return null;
+            return NextResponse.json(
+                { error: "FRED API key is missing" },
+                { status: 500 }
+            );
         }
 
         try {
