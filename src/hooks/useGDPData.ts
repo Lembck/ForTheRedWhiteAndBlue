@@ -21,7 +21,8 @@ export const useGDPData = () => {
                 const response = await fetch("/api/gdp");
 
                 if (!response.ok) {
-                    throw new Error(`HTTP error! status: ${response.status}`);
+                    const errorData = await response.json();
+                    throw new Error(errorData.error);
                 }
 
                 const data: GDPResponse = await response.json();

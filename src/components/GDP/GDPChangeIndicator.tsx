@@ -4,13 +4,11 @@ import { GDPChangeData } from "@/types/gdp";
 
 interface GDPChangeIndicatorProps {
     change: GDPChangeData | null;
-    label: string;
     includeYearInQuarter?: boolean;
 }
 
 export const GDPChangeIndicator: React.FC<GDPChangeIndicatorProps> = ({
     change,
-    label,
     includeYearInQuarter = false,
 }) => {
     if (!change) return null;
@@ -31,7 +29,7 @@ export const GDPChangeIndicator: React.FC<GDPChangeIndicatorProps> = ({
             </span>
             <span className="flex items-center gap-2 text-sm text-zinc-500">
                 <span className="text-xs flex items-center h-4">
-                    {`${label} ${getQuarter(
+                    {`since ${getQuarter(
                         change?.dateString,
                         includeYearInQuarter
                     )}`}

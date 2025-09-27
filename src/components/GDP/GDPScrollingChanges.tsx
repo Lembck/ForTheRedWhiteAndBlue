@@ -1,13 +1,16 @@
 import React, { useRef, useEffect, useState } from "react";
-import { GDPChangeIndicator } from "./GDPChangeIndicator";
 import { GDPChangeData } from "@/types/gdp";
+import { GDPChangeIndicator } from "./GDPChangeIndicator";
 
-interface GDPMetricsProps {
+interface GDPScrollingChangesProps {
     changes: (GDPChangeData | null)[];
     loading: boolean;
 }
 
-export const GDPMetrics: React.FC<GDPMetricsProps> = ({ changes, loading }) => {
+export const GDPScrollingChanges: React.FC<GDPScrollingChangesProps> = ({
+    changes,
+    loading,
+}) => {
     const scrollContainerRef = useRef<HTMLDivElement>(null);
     const [scrollWidth, setScrollWidth] = useState<number>(0);
 
@@ -53,7 +56,6 @@ export const GDPMetrics: React.FC<GDPMetricsProps> = ({ changes, loading }) => {
                                 <React.Fragment key={key}>
                                     <GDPChangeIndicator
                                         change={change}
-                                        label="since"
                                         includeYearInQuarter={key != 0}
                                     />
                                     <span className="text-zinc-600">•</span>
@@ -67,7 +69,6 @@ export const GDPMetrics: React.FC<GDPMetricsProps> = ({ changes, loading }) => {
                                 <React.Fragment key={key}>
                                     <GDPChangeIndicator
                                         change={change}
-                                        label="since"
                                         includeYearInQuarter={key != 0}
                                     />
                                     <span className="text-zinc-600">•</span>

@@ -9,15 +9,16 @@ export async function GET() {
         );
 
         if (!response.ok) {
-            throw new Error(`HTTP error! status: ${response.status}`);
+            throw new Error(
+                `FRED API Error: ${response.status} ${response.statusText}`
+            );
         }
 
         const data = await response.json();
         return NextResponse.json(data);
     } catch (error) {
-        console.error("FRED API Error:", error);
         return NextResponse.json(
-            { error: "Failed to fetch GDP data" },
+            { error: error instanceof Error ? error.message : String(error) },
             { status: 500 }
         );
     }
