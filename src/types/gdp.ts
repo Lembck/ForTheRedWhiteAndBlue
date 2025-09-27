@@ -25,4 +25,5 @@ export interface GDPChangeData {
     absolute: number;
     percent: number;
     isPositive: boolean;
+    dateString: string;
 }

@@ -2,25 +2,32 @@
 
 import React from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { useGDPData } from "../hooks/useGDPData";
-import { calculateChange } from "../utils/gdpUtils";
-import { GDPErrorCard } from "./GDP/GDPErrorCard";
-import { GDPHeader } from "./GDP/GDPHeader";
-import { GDPMetrics } from "./GDP/GDPMetrics";
+import { useGDPData } from "@/hooks/useGDPData";
+import { calculateChange } from "@/utils/gdpUtils";
+import { GDPErrorCard } from "./GDPErrorCard";
+import { GDPHeader } from "./GDPHeader";
+import { GDPMetrics } from "./GDPMetrics";
 
 const GDP: React.FC = () => {
-    const { currentGdpData, previousGdpData, lastYearGdpData, loading, error } =
-        useGDPData();
+    const {
+        currentGdpData,
+        previousGdpData,
+        lastYearGdpData,
+        twoYearsGdpData,
+        loading,
+        error,
+    } = useGDPData();
 
     const lastQuarterChange = calculateChange(currentGdpData, previousGdpData);
     const lastYearChange = calculateChange(currentGdpData, lastYearGdpData);
+    const twoYearChange = calculateChange(currentGdpData, twoYearsGdpData);
 
     if (error) {
         return <GDPErrorCard error={error} />;
     }
 
     return (
-        <Card className="w-full max-w-md bg-zinc-900 border-zinc-800 shadow-2xl">
+        <Card className="w-full max-w-sm bg-zinc-900 border-zinc-800 shadow-2xl">
             <CardHeader className="flex flex-row items-center justify-between space-y-0">
                 <CardTitle className="text-sm font-bold text-zinc-300">
                     Gross Domestic Product (GDP)
@@ -30,10 +37,11 @@ const GDP: React.FC = () => {
                 <div className="flex flex-col space-y-3">
                     <GDPHeader gdpData={currentGdpData} loading={loading} />
                     <GDPMetrics
-                        lastQuarterChange={lastQuarterChange}
-                        lastYearChange={lastYearChange}
-                        previousGdpData={previousGdpData}
-                        lastYearGdpData={lastYearGdpData}
+                        changes={[
+                            lastQuarterChange,
+                            lastYearChange,
+                            twoYearChange,
+                        ]}
                         loading={loading}
                     />
                 </div>

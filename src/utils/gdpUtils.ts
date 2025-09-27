@@ -40,5 +40,6 @@ export const calculateChange = (
         absolute: change,
         percent: percentChange,
         isPositive: change >= 0,
+        dateString: toData.date,
     };
 };

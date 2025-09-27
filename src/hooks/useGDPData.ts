@@ -9,6 +9,8 @@ export const useGDPData = () => {
         useState<GDPObservation | null>(null);
     const [lastYearGdpData, setLastYearGdpData] =
         useState<GDPObservation | null>(null);
+    const [twoYearsGdpData, setTwoYearsGdpData] =
+        useState<GDPObservation | null>(null);
     const [loading, setLoading] = useState<boolean>(true);
     const [error, setError] = useState<string | null>(null);
 
@@ -28,10 +30,12 @@ export const useGDPData = () => {
                     const mostRecent = data.observations[0];
                     const previousQuarter = data.observations[1] || null;
                     const lastYearQuarter = data.observations[4] || null;
+                    const twoYearsQuarter = data.observations[8] || null;
 
                     setCurrentGdpData(mostRecent);
                     setPreviousGdpData(previousQuarter);
                     setLastYearGdpData(lastYearQuarter);
+                    setTwoYearsGdpData(twoYearsQuarter);
                 } else {
                     throw new Error("No GDP data available");
                 }
@@ -53,6 +57,7 @@ export const useGDPData = () => {
         currentGdpData,
         previousGdpData,
         lastYearGdpData,
+        twoYearsGdpData,
         loading,
         error,
     };

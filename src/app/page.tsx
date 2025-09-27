@@ -1,4 +1,4 @@
-import GDP from "@/components/GDP";
+import GDP from "@/components/GDP/GDP";
 
 export default function Home() {
     return (
