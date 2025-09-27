@@ -5,6 +5,7 @@ import { formatMonthYear } from "@/utils/dateUtils";
 import { useState, useEffect } from "react";
 import { Skeleton } from "../ui/skeleton";
 import WidgetCard from "../WidgetCard";
+import { formatNumber } from "@/utils/numberUtils";
 
 interface ConstructionData {
     buildingPermits: {
@@ -54,8 +55,8 @@ export function HousingConstructionWidget() {
     return (
         <WidgetCard
             title="New Residential Construction Data"
-            source="U.S. Census Bureau" // Add appropriate source
-            sourceURL="https://www.census.gov/construction/nrc/" // Add appropriate URL
+            source="U.S. Census Bureau"
+            sourceURL="https://www.census.gov/construction/nrc/"
         >
             <div className="space-y-4">
                 {/* Building Permits */}
@@ -75,7 +76,7 @@ export function HousingConstructionWidget() {
                                     Building Permits
                                 </span>
                                 <span className="text-lg font-bold text-emerald-400">
-                                    {data?.buildingPermits.total.toLocaleString()}
+                                    {formatNumber(data?.buildingPermits.total)}
                                 </span>
                             </div>
                             <span className="text-sm text-zinc-400">
@@ -104,7 +105,7 @@ export function HousingConstructionWidget() {
                                     Housing Starts
                                 </span>
                                 <span className="text-lg font-bold text-emerald-400">
-                                    {data?.housingStarts.total.toLocaleString()}
+                                    {formatNumber(data?.housingStarts.total)}
                                 </span>
                             </div>
                             <span className="text-sm text-zinc-400">
@@ -133,7 +134,9 @@ export function HousingConstructionWidget() {
                                     Housing Completions
                                 </span>
                                 <span className="text-lg font-bold text-emerald-400">
-                                    {data?.housingCompletions.total.toLocaleString()}
+                                    {formatNumber(
+                                        data?.housingCompletions.total
+                                    )}
                                 </span>
                             </div>
                             <span className="text-sm text-zinc-400">

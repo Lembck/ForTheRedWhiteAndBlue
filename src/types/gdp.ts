@@ -2,7 +2,7 @@ export interface GDPObservation {
     realtime_start: string;
     realtime_end: string;
     date: string;
-    value: string;
+    value: number;
 }
 
 export interface GDPResponse {

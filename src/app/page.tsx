@@ -7,7 +7,7 @@ import PopulationWidget from "@/components/Population/PopulationWidget";
 export default function Home() {
     return (
         <div className="font-sans flex items-center justify-center min-h-screen  p-12">
-            <main className="flex flex-col items-center justify-center gap-[32px]">
+            <main className="flex flex-wrap items-center justify-center gap-[32px]">
                 <GDPWidget />
                 <DebtWidget />
                 <PopulationWidget />

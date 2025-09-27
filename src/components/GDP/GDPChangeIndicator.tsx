@@ -1,7 +1,7 @@
 import React from "react";
-import { formatGDPValue } from "@/utils/gdpUtils";
 import { GDPChangeData } from "@/types/gdp";
 import { getQuarter } from "@/utils/dateUtils";
+import { formatMoney } from "@/utils/moneyUtils";
 
 interface GDPChangeIndicatorProps {
     change: GDPChangeData | null;
@@ -21,8 +21,8 @@ export const GDPChangeIndicator: React.FC<GDPChangeIndicatorProps> = ({
             }`}
         >
             <span className="flex">
-                {change.isPositive ? "+" : ""}$
-                {formatGDPValue(change.absolute.toString())}B
+                {change.isPositive ? "+" : ""}
+                {formatMoney(change.absolute)}
             </span>
             <span className="text-zinc-500">
                 ({change.isPositive ? "+" : ""}

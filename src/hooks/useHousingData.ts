@@ -22,7 +22,16 @@ export const useHousingData = () => {
                 const data: FREDHousingResponse = await response.json();
 
                 if (data.observations && data.observations.length > 0) {
-                    setData(data);
+                    const cleanedData = {
+                        ...data,
+                        observations: data.observations.map((observation) => {
+                            return {
+                                ...observation,
+                                value: observation.value * 1000,
+                            };
+                        }),
+                    };
+                    setData(cleanedData);
                 } else {
                     throw new Error("No Housing data available");
                 }

@@ -8,6 +8,7 @@ import { formatNumber } from "@/utils/numberUtils";
 
 const PopulationWidget = () => {
     const { currentPopulationData, loading } = usePopulationData();
+    console.log(currentPopulationData);
     return (
         <WidgetCard
             title="Population"

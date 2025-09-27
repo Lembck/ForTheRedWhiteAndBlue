@@ -6,6 +6,7 @@ import { Skeleton } from "../ui/skeleton";
 import WidgetCard from "../WidgetCard";
 import { useHousingData } from "@/hooks/useHousingData";
 import { getQuarter } from "@/utils/dateUtils";
+import { formatNumber } from "@/utils/numberUtils";
 
 const HousingWidget: React.FC = () => {
     const { data, loading, error } = useHousingData();
@@ -32,7 +33,7 @@ const HousingWidget: React.FC = () => {
                 ) : (
                     <>
                         <span className="text-2xl font-bold text-emerald-400">
-                            {Number(data?.observations[0].value) / 1000}M
+                            {formatNumber(data?.observations[0].value)}
                         </span>
                         <span className="h-5 text-lg font-semibold text-zinc-400">
                             {getQuarter(data?.observations[0].date)}

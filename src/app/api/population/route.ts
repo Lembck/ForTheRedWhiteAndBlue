@@ -1,4 +1,3 @@
-import { DatabaseZap } from "lucide-react";
 import { NextResponse } from "next/server";
 
 export async function GET() {

@@ -14,6 +14,13 @@ export const useGDPData = () => {
     const [loading, setLoading] = useState<boolean>(true);
     const [error, setError] = useState<string | null>(null);
 
+    const cleanValue = (input: GDPObservation): GDPObservation => {
+        return {
+            ...input,
+            value: input.value * 1000000000,
+        };
+    };
+
     useEffect(() => {
         const fetchGDPData = async () => {
             try {
@@ -35,10 +42,13 @@ export const useGDPData = () => {
                     const lastYearQuarter = data.observations[4] || null;
                     const twoYearsQuarter = data.observations[8] || null;
 
-                    setCurrentGdpData(mostRecent);
-                    setPreviousGdpData(previousQuarter);
-                    setLastYearGdpData(lastYearQuarter);
-                    setTwoYearsGdpData(twoYearsQuarter);
+                    console.log(mostRecent);
+                    console.log(cleanValue(mostRecent));
+
+                    setCurrentGdpData(cleanValue(mostRecent));
+                    setPreviousGdpData(cleanValue(previousQuarter));
+                    setLastYearGdpData(cleanValue(lastYearQuarter));
+                    setTwoYearsGdpData(cleanValue(twoYearsQuarter));
                 } else {
                     throw new Error("No GDP data available");
                 }

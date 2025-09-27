@@ -1,20 +1,4 @@
-import { NextRequest, NextResponse } from "next/server";
-
-// Types for the response data
-interface ConstructionData {
-    buildingPermits: {
-        total: number;
-        date: string;
-    };
-    housingStarts: {
-        total: number;
-        date: string;
-    };
-    housingCompletions: {
-        total: number;
-        date: string;
-    };
-}
+import { NextResponse } from "next/server";
 
 interface FredObservation {
     date: string;
@@ -25,7 +9,7 @@ interface FredResponse {
     observations: FredObservation[];
 }
 
-export async function GET(request: NextRequest) {
+export async function GET() {
     try {
         const FRED_API_KEY = process.env.FRED_API_KEY;
 
@@ -71,7 +55,6 @@ export async function GET(request: NextRequest) {
                 results.map(({ key, data }) => [key, data])
             );
 
-            // Get the most recent data point for each series
             const getLatestValue = (observations: FredObservation[]) => {
                 const latest = observations.find((obs) => obs.value !== ".");
                 return latest ? parseFloat(latest.value) : 0;
@@ -90,15 +73,16 @@ export async function GET(request: NextRequest) {
 
             return NextResponse.json({
                 buildingPermits: {
-                    total: getLatestValue(dataMap.permitsTotal),
+                    total: (getLatestValue(dataMap.permitsTotal) * 1000) / 12,
                     date: getLatestDate(dataMap.permitsTotal),
                 },
                 housingStarts: {
-                    total: getLatestValue(dataMap.startsTotal),
+                    total: (getLatestValue(dataMap.startsTotal) * 1000) / 12,
                     date: getLatestDate(dataMap.startsTotal),
                 },
                 housingCompletions: {
-                    total: getLatestValue(dataMap.completionsTotal),
+                    total:
+                        (getLatestValue(dataMap.completionsTotal) * 1000) / 12,
                     date: getLatestDate(dataMap.completionsTotal),
                 },
             });
