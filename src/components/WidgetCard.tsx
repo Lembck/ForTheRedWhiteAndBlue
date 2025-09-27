@@ -11,6 +11,7 @@ interface WidgetCardProps {
     title: string;
     children: ReactNode;
     source?: string;
+    sourceURL?: string;
     error?: boolean;
 }
 
@@ -18,6 +19,7 @@ const WidgetCard: React.FC<WidgetCardProps> = ({
     title,
     children,
     source,
+    sourceURL,
     error = false,
 }) => {
     return (
@@ -27,7 +29,7 @@ const WidgetCard: React.FC<WidgetCardProps> = ({
             } shadow-2xl`}
         >
             <CardHeader className="flex flex-row items-center justify-between space-y-0">
-                <CardTitle className="text-sm font-bold text-zinc-300">
+                <CardTitle className="text-md font-bold text-zinc-300">
                     {title}
                 </CardTitle>
             </CardHeader>
@@ -36,7 +38,10 @@ const WidgetCard: React.FC<WidgetCardProps> = ({
                     {children}
                     {source ? (
                         <CardDescription className="text-xs text-zinc-500">
-                            Source: {source}
+                            Source:{" "}
+                            <a href={sourceURL} target="_new">
+                                {source}
+                            </a>
                         </CardDescription>
                     ) : (
                         <></>

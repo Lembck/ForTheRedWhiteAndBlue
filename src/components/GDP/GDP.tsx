@@ -35,6 +35,7 @@ const GDP: React.FC = () => {
         <WidgetCard
             title="Gross Domestic Product (GDP)"
             source="Federal Reserve Economic Data (FRED)"
+            sourceURL="https://fred.stlouisfed.org/series/GDP/"
         >
             <div className="flex items-baseline justify-between">
                 {loading ? (
