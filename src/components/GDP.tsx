@@ -8,8 +8,7 @@ import {
     CardHeader,
     CardTitle,
 } from "@/components/ui/card";
-import { Badge } from "@/components/ui/badge";
-import { TrendingUp, Calendar, DollarSign } from "lucide-react";
+import { Calendar } from "lucide-react";
 import { Skeleton } from "@/components/ui/skeleton";
 
 interface GDPObservation {
@@ -54,6 +53,7 @@ const GDP: React.FC = () => {
 
                 if (data.observations && data.observations.length > 0) {
                     const mostRecent = data.observations[0];
+                    console.log(data, mostRecent);
                     setGdpData(mostRecent);
                 } else {
                     throw new Error("No GDP data available");
@@ -83,22 +83,12 @@ const GDP: React.FC = () => {
         }).format(numValue);
     };
 
-    const formatDate = (dateString?: string): string => {
-        if (!dateString) return "";
-        const date = new Date(dateString);
-        return date.toLocaleDateString("en-US", {
-            year: "numeric",
-            month: "long",
-            day: "numeric",
-        });
-    };
-
     const getQuarter = (dateString?: string): string => {
         if (!dateString) return "";
         const date = new Date(dateString);
-        const month = date.getMonth();
+        const month = date.getUTCMonth();
         const quarter = Math.floor(month / 3) + 1;
-        return `Q${quarter} ${date.getFullYear()}`;
+        return `Q${quarter} ${date.getUTCFullYear()}`;
     };
 
     if (error) {
@@ -118,30 +108,21 @@ const GDP: React.FC = () => {
 
     return (
         <Card className="w-full max-w-md bg-zinc-900 border-zinc-800 shadow-2xl">
-            <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-                <CardTitle className="text-sm font-medium text-zinc-100">
-                    US Gross Domestic Product
+            <CardHeader className="flex flex-row items-center justify-between space-y-0">
+                <CardTitle className="text-md font-bold text-zinc-300">
+                    Gross Domestic Product
                 </CardTitle>
-                <DollarSign className="h-4 w-4 text-zinc-400" />
             </CardHeader>
             <CardContent>
                 <div className="flex flex-col space-y-3">
                     <div className="flex items-center justify-between">
                         {loading ? (
-                            <Skeleton className="h-8 w-32 bg-zinc-700" />
+                            <Skeleton className="h-8 w-36 bg-emerald-400/50" />
                         ) : (
                             <span className="text-2xl font-bold text-emerald-400">
                                 ${formatGDPValue(gdpData?.value)}B
                             </span>
                         )}
-
-                        <Badge
-                            variant="secondary"
-                            className="flex items-center gap-1 bg-zinc-800 text-zinc-300 border-zinc-700"
-                        >
-                            <TrendingUp className="h-3 w-3" />
-                            Nominal
-                        </Badge>
                     </div>
 
                     <div className="space-y-1">
@@ -151,23 +132,13 @@ const GDP: React.FC = () => {
                                 <Skeleton className="h-4 w-40 bg-zinc-700" />
                             ) : (
                                 <span className="flex items-center h-4">
-                                    {getQuarter(gdpData?.date)} •{" "}
-                                    {formatDate(gdpData?.date)}
+                                    {getQuarter(gdpData?.date)}
                                 </span>
                             )}
                         </div>
 
                         <CardDescription className="text-xs text-zinc-500">
-                            Source: Federal Reserve Economic Data (FRED)
-                            <br />
-                            <span className="flex items-center">
-                                Last updated:{" "}
-                                {loading ? (
-                                    <Skeleton className="ml-1 h-3 w-1/2 bg-zinc-800" />
-                                ) : (
-                                    formatDate(gdpData?.realtime_end)
-                                )}
-                            </span>
+                            Source: Federal Reserve Economic Data
                         </CardDescription>
                     </div>
                 </div>
