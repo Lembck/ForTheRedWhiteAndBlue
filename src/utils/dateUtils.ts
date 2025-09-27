@@ -12,7 +12,6 @@ export const getQuarter = (
 export const formatDate = (dateString: string | undefined): string => {
     if (!dateString) return "";
     const date = new Date(dateString);
-    console.log(dateString, date);
 
     // Check if date is valid
     if (isNaN(date.getTime())) return "";
@@ -21,6 +20,20 @@ export const formatDate = (dateString: string | undefined): string => {
         year: "numeric",
         month: "short",
         day: "numeric",
+        timeZone: "UTC",
+    });
+};
+
+export const formatMonthYear = (dateString: string | undefined): string => {
+    if (!dateString) return "";
+    const date = new Date(dateString);
+
+    // Check if date is valid
+    if (isNaN(date.getTime())) return "";
+
+    return date.toLocaleDateString("en-US", {
+        year: "numeric",
+        month: "short",
         timeZone: "UTC",
     });
 };

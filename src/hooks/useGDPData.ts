@@ -18,7 +18,9 @@ export const useGDPData = () => {
         const fetchGDPData = async () => {
             try {
                 setLoading(true);
-                const response = await fetch("/api/gdp");
+                const response = await fetch(
+                    "/api/fred?series=gdp&limit=9&order=desc"
+                );
 
                 if (!response.ok) {
                     const errorData = await response.json();

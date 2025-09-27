@@ -20,7 +20,6 @@ export const usePopulationData = () => {
                 }
 
                 const data: PopulationRecord = await response.json();
-                console.log("HERE", data);
 
                 if (data) {
                     setCurrentPopulationData(data);

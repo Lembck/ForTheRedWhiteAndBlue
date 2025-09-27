@@ -9,7 +9,7 @@ import { Skeleton } from "../ui/skeleton";
 import WidgetCard from "../WidgetCard";
 import { getQuarter } from "@/utils/dateUtils";
 
-const GDP: React.FC = () => {
+const GDPWidget: React.FC = () => {
     const {
         currentGdpData,
         previousGdpData,
@@ -60,4 +60,4 @@ const GDP: React.FC = () => {
     );
 };
 
-export default GDP;
+export default GDPWidget;
