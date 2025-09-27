@@ -5,7 +5,7 @@ export async function GET() {
         const apiKey = process.env.FRED_API_KEY;
 
         const response = await fetch(
-            `https://api.stlouisfed.org/fred/series/observations?series_id=GDP&api_key=${apiKey}&file_type=json&limit=2&sort_order=desc`
+            `https://api.stlouisfed.org/fred/series/observations?series_id=GDP&api_key=${apiKey}&file_type=json&limit=5&sort_order=desc`
         );
 
         if (!response.ok) {
