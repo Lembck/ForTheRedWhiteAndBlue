@@ -87,8 +87,14 @@ export async function GET() {
                 },
             });
         } catch (error) {
-            console.error("Error fetching FRED data:", error);
-            return null;
+            return NextResponse.json(
+                {
+                    error: `Error fetching FRED data: ${
+                        error instanceof Error ? error.message : String(error)
+                    }`,
+                },
+                { status: 500 }
+            );
         }
     } catch (error) {
         return NextResponse.json(

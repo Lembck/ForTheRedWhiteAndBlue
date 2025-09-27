@@ -54,9 +54,13 @@ export function HousingConstructionWidget() {
 
     return (
         <WidgetCard
-            title="New Residential Construction Data"
-            source="U.S. Census Bureau"
-            sourceURL="https://www.census.gov/construction/nrc/"
+            title="Residential Construction Data"
+            source="Federal Reserve Economic Data (FRED)"
+            sourceURL={[
+                "https://fred.stlouisfed.org/series/PERMIT",
+                "https://fred.stlouisfed.org/series/HOUST",
+                "https://fred.stlouisfed.org/series/COMPUTSA",
+            ]}
         >
             <div className="space-y-4">
                 {/* Building Permits */}
@@ -73,7 +77,7 @@ export function HousingConstructionWidget() {
                         <>
                             <div className="flex flex-col">
                                 <span className="text-sm text-zinc-400">
-                                    Building Permits
+                                    Building Permit Authorizations
                                 </span>
                                 <span className="text-lg font-bold text-emerald-400">
                                     {formatNumber(data?.buildingPermits.total)}

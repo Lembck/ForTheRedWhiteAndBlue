@@ -11,7 +11,7 @@ interface WidgetCardProps {
     title: string;
     children: ReactNode;
     source?: string;
-    sourceURL?: string;
+    sourceURL?: string | string[];
     error?: boolean;
 }
 
@@ -39,9 +39,33 @@ const WidgetCard: React.FC<WidgetCardProps> = ({
                     {source ? (
                         <CardDescription className="text-xs text-zinc-500">
                             Source:{" "}
-                            <a href={sourceURL} target="_new">
-                                {source}
-                            </a>
+                            {Array.isArray(sourceURL) ? (
+                                sourceURL.map((url, index) => (
+                                    <a
+                                        key={index}
+                                        href={url}
+                                        target="_blank"
+                                        rel="noopener noreferrer"
+                                    >
+                                        {source.slice(
+                                            index *
+                                                (source.length /
+                                                    sourceURL.length),
+                                            (index + 1) *
+                                                (source.length /
+                                                    sourceURL.length)
+                                        )}
+                                    </a>
+                                ))
+                            ) : (
+                                <a
+                                    href={sourceURL}
+                                    target="_blank"
+                                    rel="noopener noreferrer"
+                                >
+                                    {source}
+                                </a>
+                            )}
                         </CardDescription>
                     ) : (
                         <></>
