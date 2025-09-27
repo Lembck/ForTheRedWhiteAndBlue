@@ -3,10 +3,11 @@
 import React from "react";
 
 import { useGDPData } from "@/hooks/useGDPData";
-import { calculateChange, formatGDPValue, getQuarter } from "@/utils/gdpUtils";
+import { calculateChange, formatGDPValue } from "@/utils/gdpUtils";
 import { GDPScrollingChanges } from "./GDPScrollingChanges";
 import { Skeleton } from "../ui/skeleton";
 import WidgetCard from "../WidgetCard";
+import { getQuarter } from "@/utils/dateUtils";
 
 const GDP: React.FC = () => {
     const {

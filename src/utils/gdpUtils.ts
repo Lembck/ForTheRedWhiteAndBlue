@@ -11,17 +11,6 @@ export const formatGDPValue = (value?: string): string => {
     }).format(numValue);
 };
 
-export const getQuarter = (
-    dateString?: string,
-    includeYear: boolean = true
-): string => {
-    if (!dateString) return "";
-    const date = new Date(dateString);
-    const month = date.getUTCMonth();
-    const quarter = Math.floor(month / 3) + 1;
-    return `Q${quarter} ${includeYear ? date.getUTCFullYear() : ""}`;
-};
-
 export const calculateChange = (
     fromData: GDPObservation | null,
     toData: GDPObservation | null

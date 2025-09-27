@@ -1,6 +1,7 @@
 import React from "react";
-import { formatGDPValue, getQuarter } from "@/utils/gdpUtils";
+import { formatGDPValue } from "@/utils/gdpUtils";
 import { GDPChangeData } from "@/types/gdp";
+import { getQuarter } from "@/utils/dateUtils";
 
 interface GDPChangeIndicatorProps {
     change: GDPChangeData | null;
