@@ -170,7 +170,7 @@ const SpendingWidget: React.FC = () => {
                                         </div>
                                     </div>
                                 )}
-                                enableLinkGradient={true}
+                                enableLinkGradient={false}
                                 labelPosition="inside"
                                 labelOrientation="horizontal"
                                 labelPadding={16}
