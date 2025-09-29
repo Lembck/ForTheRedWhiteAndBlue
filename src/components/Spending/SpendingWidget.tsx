@@ -8,7 +8,6 @@ import { formatDate } from "@/utils/dateUtils";
 import { Separator } from "../ui/separator";
 import { ResponsiveSankey } from "@nivo/sankey";
 import { formatPercent } from "@/utils/numberUtils";
-import { useEffect, useState } from "react";
 
 const SpendingWidget: React.FC = () => {
     const { currentSpending, loading } = useSpendingData();
@@ -62,14 +61,8 @@ const SpendingWidget: React.FC = () => {
         links: currentSpendingLinks,
     };
 
-    const [key, setKey] = useState(0);
-
-    useEffect(() => {
-        // Force re-render after mount on mobile
-        if (/iPhone|iPad|iPod|Android/i.test(navigator.userAgent)) {
-            setTimeout(() => setKey((k) => k + 1), 100);
-        }
-    }, []);
+    const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
+    console.log("isMobile", isMobile);
 
     return (
         <WidgetCard
@@ -170,7 +163,7 @@ const SpendingWidget: React.FC = () => {
                                         </div>
                                     </div>
                                 )}
-                                enableLinkGradient={false}
+                                enableLinkGradient={!isMobile}
                                 labelPosition="inside"
                                 labelOrientation="horizontal"
                                 labelPadding={16}
