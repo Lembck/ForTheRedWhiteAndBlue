@@ -3,6 +3,7 @@ import GDPWidget from "@/components/GDP/GDPWidget";
 import { HousingConstructionWidget } from "@/components/Housing/HousingConstructionWidget";
 import HousingWidget from "@/components/Housing/HousingWidget";
 import PopulationWidget from "@/components/Population/PopulationWidget";
+import SpendingWidget from "@/components/Spending/SpendingWidget";
 
 export default function Home() {
     return (
@@ -13,6 +14,7 @@ export default function Home() {
                 <PopulationWidget />
                 <HousingWidget />
                 <HousingConstructionWidget />
+                <SpendingWidget />
             </main>
             <footer className="row-start-3 flex gap-[24px] flex-wrap items-center justify-center"></footer>
         </div>

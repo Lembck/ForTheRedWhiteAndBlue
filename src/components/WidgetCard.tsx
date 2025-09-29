@@ -7,9 +7,18 @@ import {
     CardTitle,
 } from "./ui/card";
 
+export enum WidthSize {
+    sm = "sm",
+    md = "md",
+    lg = "lg",
+    xl = "xl",
+    "2xl" = "2xl",
+}
+
 interface WidgetCardProps {
     title: string;
     children: ReactNode;
+    width?: WidthSize;
     source?: string;
     sourceURL?: string | string[];
     error?: boolean;
@@ -18,13 +27,14 @@ interface WidgetCardProps {
 const WidgetCard: React.FC<WidgetCardProps> = ({
     title,
     children,
+    width = "sm",
     source,
     sourceURL,
     error = false,
 }) => {
     return (
         <Card
-            className={`w-sm bg-zinc-900 ${
+            className={`w-${width} bg-zinc-900 ${
                 error ? "border-red-800" : "border-zinc-800"
             } shadow-2xl`}
         >

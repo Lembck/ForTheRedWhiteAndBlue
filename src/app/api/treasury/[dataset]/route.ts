@@ -1,9 +1,12 @@
-import { NextResponse } from "next/server";
+import { NextRequest, NextResponse } from "next/server";
 
-export async function GET() {
+export async function GET(request: NextRequest) {
+    const { searchParams, pathname } = new URL(request.url);
+    const dataset = pathname.split("/").pop();
+
     try {
         const response = await fetch(
-            `https://api.fiscaldata.treasury.gov/services/api/fiscal_service/v2/accounting/od/debt_to_penny?sort=-record_date&format=json&page[number]=1&page[size]=1`
+            `https://api.fiscaldata.treasury.gov/services/api/fiscal_service/v2/accounting/od/${dataset}?${searchParams.toString()}`
         );
 
         if (!response.ok) {

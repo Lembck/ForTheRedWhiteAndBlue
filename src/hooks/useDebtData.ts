@@ -11,7 +11,9 @@ export const useDebtData = () => {
         const fetchDebtData = async () => {
             try {
                 setLoading(true);
-                const response = await fetch("/api/debt");
+                const response = await fetch(
+                    "/api/treasury/debt_to_penny?sort=-record_date&format=json&page[number]=1&page[size]=1"
+                );
 
                 if (!response.ok) {
                     const errorData = await response.json();
