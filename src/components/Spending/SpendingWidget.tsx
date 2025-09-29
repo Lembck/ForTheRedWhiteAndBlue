@@ -8,16 +8,21 @@ import { formatDate } from "@/utils/dateUtils";
 import { Separator } from "../ui/separator";
 import { ResponsiveSankey } from "@nivo/sankey";
 import { formatPercent } from "@/utils/numberUtils";
+import { TouchEventHandler, useState } from "react";
 
 const SpendingWidget: React.FC = () => {
+    const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
+
     const { currentSpending, loading } = useSpendingData();
 
     const totalSpending = currentSpending?.find(
         (record) => record.agency_nm == "Total"
     );
 
+    const topSpendingNodes = isMobile ? 5 : 10;
+
     const currentSpendingNodes =
-        currentSpending?.slice(0, 10)?.map((record) => {
+        currentSpending?.slice(0, topSpendingNodes)?.map((record) => {
             return { id: record.agency_nm };
         }) || [];
 
@@ -27,7 +32,7 @@ const SpendingWidget: React.FC = () => {
     currentSpendingNodes.push({ id: "Corporate Income Tax" });
 
     const currentSpendingLinks =
-        currentSpending?.slice(0, 10).map((record) => {
+        currentSpending?.slice(0, topSpendingNodes).map((record) => {
             return {
                 source: "Federal Government",
                 target: record.agency_nm,
@@ -61,17 +66,30 @@ const SpendingWidget: React.FC = () => {
         links: currentSpendingLinks,
     };
 
-    const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
-    console.log("isMobile", isMobile);
+    const [leftSide, setLeftSide] = useState(false);
+
+    const handleMouseMove: TouchEventHandler<HTMLDivElement> = (e) => {
+        const windowWidth = window.innerWidth;
+        const mouseX = e.touches[0].clientX;
+
+        if (mouseX < windowWidth / 2) {
+            setLeftSide(true);
+        } else {
+            setLeftSide(false);
+        }
+    };
 
     return (
         <WidgetCard
-            title="Total Federal Spending"
+            title="Federal Revenue, Spending, and Deficit"
             source="Fiscal Data - Treasury"
             sourceURL="https://fiscaldata.treasury.gov/datasets/u-s-government-financial-report/statements-of-net-cost"
             className={"w-[100%]"}
         >
-            <div className="flex flex-col items-baseline justify-between">
+            <div
+                className="flex flex-col items-baseline justify-between"
+                onTouchStart={handleMouseMove}
+            >
                 {loading ? (
                     <>
                         <Skeleton className="h-6 my-1 w-36 bg-emerald-400/50" />
@@ -104,15 +122,24 @@ const SpendingWidget: React.FC = () => {
                             </div>
                         ))*/}
                         <div
-                            className="w-full h-[50vh] py-2"
-                            style={{ transform: "translateZ(0)" }}
+                            className={`w-full ${
+                                isMobile ? "h-[75dvh]" : "h-[50vh]"
+                            } py-2`}
                         >
                             <ResponsiveSankey
                                 data={data}
-                                margin={{
-                                    bottom: 4,
-                                }}
+                                margin={
+                                    isMobile
+                                        ? {
+                                              top: 175,
+                                              bottom: 275,
+                                          }
+                                        : {
+                                              bottom: 4,
+                                          }
+                                }
                                 align="justify"
+                                layout={isMobile ? "vertical" : "horizontal"}
                                 nodeOpacity={1}
                                 colors={{ scheme: "green_blue", size: 4 }}
                                 nodeHoverOthersOpacity={0.35}
@@ -133,7 +160,11 @@ const SpendingWidget: React.FC = () => {
                                 linkBlendMode="lighten"
                                 linkTooltip={(link) => (
                                     <div
-                                        className="bg-zinc-900 p-3 border border-emerald-700 rounded-md"
+                                        className={`bg-zinc-900 p-3 border border-emerald-700 rounded-md ${
+                                            isMobile && leftSide
+                                                ? "translate-x-60"
+                                                : ""
+                                        }`}
                                         style={{
                                             boxShadow:
                                                 "0 2px 4px rgba(0,0,0,0.1)",
@@ -149,11 +180,11 @@ const SpendingWidget: React.FC = () => {
                                             </div>
                                         </div>
 
-                                        <div className="flex justify-between items-center min-w-80">
-                                            <span className="text-xl font-bold text-emerald-400">
+                                        <div className="flex justify-between items-center min-w-40 sm:min-w-80">
+                                            <span className="text-md sm:text-xl font-bold text-emerald-400">
                                                 {formatMoney(link.link.value)}
                                             </span>
-                                            <span className="text-xl text-end font-bold text-emerald-400">
+                                            <span className="text-md sm:text-xl text-end font-bold text-emerald-400">
                                                 {`${formatPercent(
                                                     link.link.value /
                                                         totalSpending!
@@ -164,8 +195,10 @@ const SpendingWidget: React.FC = () => {
                                     </div>
                                 )}
                                 enableLinkGradient={!isMobile}
-                                labelPosition="inside"
-                                labelOrientation="horizontal"
+                                labelPosition={isMobile ? "outside" : "inside"}
+                                labelOrientation={
+                                    isMobile ? "vertical" : "horizontal"
+                                }
                                 labelPadding={16}
                                 labelTextColor={{
                                     from: "color",

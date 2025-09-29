@@ -45,6 +45,29 @@ export const useSpendingData = () => {
                         .map((record: IncomingFederalSpendingRecord) =>
                             updateToBillions(record)
                         )
+                        .map((record: FederalSpendingRecord) => {
+                            if (
+                                record.agency_nm ===
+                                "Interest on Treasury Securities held by the public"
+                            ) {
+                                return {
+                                    ...record,
+                                    agency_nm:
+                                        "Interest on Treasury Securities",
+                                };
+                            } else if (
+                                record.agency_nm ===
+                                "Department of Health and Human Services"
+                            ) {
+                                return {
+                                    ...record,
+                                    agency_nm:
+                                        "Dept. of Health and Human Services",
+                                };
+                            } else {
+                                return record;
+                            }
+                        })
                         .filter(
                             (record) =>
                                 record.record_date.getFullYear() ===
