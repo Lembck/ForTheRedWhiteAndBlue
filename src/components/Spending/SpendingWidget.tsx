@@ -8,6 +8,7 @@ import { formatDate } from "@/utils/dateUtils";
 import { Separator } from "../ui/separator";
 import { ResponsiveSankey } from "@nivo/sankey";
 import { formatPercent } from "@/utils/numberUtils";
+import { useEffect, useState } from "react";
 
 const SpendingWidget: React.FC = () => {
     const { currentSpending, loading } = useSpendingData();
@@ -23,6 +24,8 @@ const SpendingWidget: React.FC = () => {
 
     currentSpendingNodes.push({ id: "Federal Government" });
     currentSpendingNodes.push({ id: "Other" });
+    currentSpendingNodes.push({ id: "Individual Income Tax" });
+    currentSpendingNodes.push({ id: "Corporate Income Tax" });
 
     const currentSpendingLinks =
         currentSpending?.slice(0, 10).map((record) => {
@@ -43,11 +46,30 @@ const SpendingWidget: React.FC = () => {
         target: "Other",
         value: (totalSpending?.net_cost_bil_amt ?? 0) - top10Sum,
     });
+    currentSpendingLinks.push({
+        source: "Individual Income Tax",
+        target: "Federal Government",
+        value: 3000000000000,
+    });
+    currentSpendingLinks.push({
+        source: "Corporate Income Tax",
+        target: "Federal Government",
+        value: 3000000000000,
+    });
 
     const data = {
         nodes: currentSpendingNodes,
         links: currentSpendingLinks,
     };
+
+    const [key, setKey] = useState(0);
+
+    useEffect(() => {
+        // Force re-render after mount on mobile
+        if (/iPhone|iPad|iPod|Android/i.test(navigator.userAgent)) {
+            setTimeout(() => setKey((k) => k + 1), 100);
+        }
+    }, []);
 
     return (
         <WidgetCard
