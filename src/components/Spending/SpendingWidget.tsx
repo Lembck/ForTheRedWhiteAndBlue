@@ -88,7 +88,10 @@ const SpendingWidget: React.FC = () => {
                                 </span>
                             </div>
                         ))*/}
-                        <div className="w-full h-[50vh] py-2">
+                        <div
+                            className="w-full h-[50vh] py-2"
+                            style={{ transform: "translateZ(0)" }}
+                        >
                             <ResponsiveSankey
                                 data={data}
                                 margin={{
@@ -121,21 +124,21 @@ const SpendingWidget: React.FC = () => {
                                                 "0 2px 4px rgba(0,0,0,0.1)",
                                         }}
                                     >
-                                        <div>
-                                            <strong className="text-nowrap text-zinc-300">
+                                        <div className="flex flex-col">
+                                            <div className="font-bold text-nowrap text-zinc-300">
                                                 {link.link.source.id} →{" "}
-                                            </strong>
+                                            </div>
 
-                                            <strong className="text-nowrap text-zinc-300">
+                                            <div className="font-bold text-nowrap text-zinc-300">
                                                 {link.link.target.id}
-                                            </strong>
+                                            </div>
                                         </div>
 
                                         <div className="flex justify-between items-center min-w-80">
                                             <span className="text-xl font-bold text-emerald-400">
                                                 {formatMoney(link.link.value)}
                                             </span>
-                                            <span className="text-xl font-bold text-emerald-400">
+                                            <span className="text-xl text-end font-bold text-emerald-400">
                                                 {`${formatPercent(
                                                     link.link.value /
                                                         totalSpending!
