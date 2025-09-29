@@ -41,3 +41,7 @@ export const formatNumber = (
     const trillions = absAmount / 1000000000000;
     return formatWithSuffix(trillions, "T");
 };
+
+export const formatPercent = (amount: number): string => {
+    return `${(Math.round(amount * 10000) / 100).toFixed(2)}%`;
+};

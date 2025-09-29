@@ -6,19 +6,12 @@ import {
     CardHeader,
     CardTitle,
 } from "./ui/card";
-
-export enum WidthSize {
-    sm = "sm",
-    md = "md",
-    lg = "lg",
-    xl = "xl",
-    "2xl" = "2xl",
-}
+import { cn } from "@/lib/utils";
 
 interface WidgetCardProps {
     title: string;
     children: ReactNode;
-    width?: WidthSize;
+    className?: string;
     source?: string;
     sourceURL?: string | string[];
     error?: boolean;
@@ -27,16 +20,19 @@ interface WidgetCardProps {
 const WidgetCard: React.FC<WidgetCardProps> = ({
     title,
     children,
-    width = "sm",
+    className,
     source,
     sourceURL,
     error = false,
 }) => {
     return (
         <Card
-            className={`w-${width} bg-zinc-900 ${
-                error ? "border-red-800" : "border-zinc-800"
-            } shadow-2xl`}
+            className={cn(
+                `w-sm bg-zinc-900 ${
+                    error ? "border-red-800" : "border-zinc-800"
+                } shadow-2xl`,
+                className
+            )}
         >
             <CardHeader className="flex flex-row items-center justify-between space-y-0">
                 <CardTitle className="text-md font-bold text-zinc-300">
@@ -47,7 +43,7 @@ const WidgetCard: React.FC<WidgetCardProps> = ({
                 <div className="flex flex-col space-y-3">
                     {children}
                     {source ? (
-                        <CardDescription className="text-xs text-zinc-500">
+                        <CardDescription className="text-end text-xs text-zinc-500">
                             Source:{" "}
                             {Array.isArray(sourceURL) ? (
                                 sourceURL.map((url, index) => (
